@@ -74,5 +74,5 @@ El proyecto requiere el archivo `google-services.json` en la carpeta `app/`. Se 
 
 |           Splash Screen           |       Home (Categorías)       |        Detalle de Película        | Recomendación |
 |:---------------------------------:|:-----------------------------:|:---------------------------------:|:---:|
-| ![Splash](screenshots/Splash.png) | ![Home](screenshots/Home.png) | ![Detail](screenshots/Detail.png) | ![BottomSheet](screenshots/BottomSheet.png) |
+| <img src="screenshots/Splash.png" width="200" /> | <img src="screenshots/Home.png" width="200" /> | <img src="screenshots/Detail.png" width="200" /> | <img src="screenshots/BottomSheet.png" width="200" /> |
 
