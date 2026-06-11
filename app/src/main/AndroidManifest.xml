@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".ImdumbApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher_app_imdumb_only_image"
+        android:label="${appName}"
+        android:roundIcon="@mipmap/ic_launcher_app_imdumb_only_image_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Imdumb">
+
+        <activity
+            android:name=".presentation.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Imdumb">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".presentation.main.MainActivity"
+            android:exported="false"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".presentation.detail.DetailActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
