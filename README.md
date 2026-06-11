@@ -1,78 +1,98 @@
-# IMDUMB - Technical Challenge
+# IMDUMB - Technical Challenge 🎬
 
-## Resumen del Proyecto
-IMDUMB es una aplicación Android que consume la API de TheMovieDB para mostrar categorías de películas y detalles técnicos de cada una, incluyendo reparto principal y carrusel de imágenes. El proyecto está diseñado siguiendo estándares de la industria para aplicaciones escalables, mantenibles y reactivas.
+[![Platform](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-purple.svg)](https://kotlinlang.org)
+[![Hilt](https://img.shields.io/badge/Hilt-2.55-blue.svg)](https://dagger.dev/hilt/)
 
-## Arquitectura
-Se ha implementado **MVP (Model-View-Presenter)** junto con **Clean Architecture**, dividiendo el proyecto en capas de responsabilidad:
+## 📝 Resumen del Proyecto
+**IMDUMB** es una robusta aplicación Android desarrollada para el reto técnico de Mobile Developer. La aplicación consume la API de **TheMovieDB** para presentar un catálogo organizado por categorías y detalles profundos de películas.
 
-### Capas:
-- **Data**: Implementación de la lógica de datos. Incluye:
-  - **Remote**: Consumo de API REST con Retrofit.
-  - **Repository Impl**: Implementación de las interfaces definidas en Domain.
-  - **Mappers**: Conversión de DTOs a modelos de Dominio.
-- **Domain**: Lógica de negocio pura. Contiene:
-  - **Models**: Entidades de negocio (POJOs de Kotlin).
-  - **Repository Interfaces**: Contratos para la capa de datos.
-  - **Use Cases**: Casos de uso específicos (e.g., `GetMoviesByCategoriesUseCase`).
-- **Presentation**: UI y lógica de vista.
-  - **MVP**: Los Presenters manejan el flujo de datos usando RxJava y notifican a las Views (Activities/Fragments).
-  - **UI**: Layouts XML con ViewBinding.
+El enfoque principal de este desarrollo ha sido la implementación de una arquitectura escalable, el uso de programación reactiva y la integración de servicios en la nube para configuraciones dinámicas.
 
-## Tech Stack y Dependencias
-- **Lenguaje**: Kotlin `2.0.21`
-- **Inyección de Dependencias**: Hilt `2.55`
-- **Networking**: Retrofit `2.11.0` + Gson `2.12.1`
-- **Programación Reactiva**: RxJava 2 `2.2.21` + RxKotlin `2.4.0` + RxAndroid `2.1.1`
-- **Imagen**: Glide `4.16.0` (Carga de posters y perfiles de actores)
-- **Firebase**: 
-  - Remote Config (Splash dinámico, Feature Toggles de recomendación y Temas).
-  - Firebase BoM `33.10.0`
-- **UI Components**:
-  - ConstraintLayout `2.2.1`
-  - RecyclerView `1.4.0`
-  - ViewPager2 `1.1.0` (Carrusel de imágenes en detalle)
-  - BottomSheetDialogFragment (Formulario de recomendación)
+---
 
-## Versiones de Entorno
-- **Android Studio**: Ladybug o superior.
-- **Gradle**: `9.4.1`
-- **Android Gradle Plugin (AGP)**: `8.7.2`
-- **Minimum SDK**: `24`
-- **Target SDK**: `35`
+## 🏗️ Arquitectura y Patrones
+Se ha adoptado el patrón **MVP (Model-View-Presenter)** en combinación con los principios de **Clean Architecture**, asegurando una separación clara de responsabilidades y facilidad para la realización de pruebas unitarias.
 
-## Configuración de Firebase
-El proyecto requiere el archivo `google-services.json` en la carpeta `app/`. Se utilizan los siguientes parámetros en **Remote Config**:
-- `welcome_text`: Mensaje en el Splash.
-- `home_title`: Título dinámico del Home.
-- `enable_recommendation`: Feature toggle (Boolean) para el botón de recomendar.
-- `app_theme`: Control de tema (`light` / `dark`).
+### Capas del Proyecto:
+1.  **Domain**: Contiene la lógica de negocio pura (Entidades, Casos de Uso e Interfaces de Repositorio). No tiene dependencias de librerías externas de Android.
+2.  **Data**: Responsable de la obtención de datos. Implementa las interfaces de la capa de dominio.
+    -   *Remote*: Implementación de Retrofit para APIs REST.
+    -   *Local*: Persistencia simple con SharedPreferences para configuraciones rápidas.
+    -   *Mappers*: Clases encargadas de transformar modelos de datos (DTOs) a modelos de dominio.
+3.  **Presentation**: Implementación de la UI siguiendo el patrón MVP.
+    -   *Presenters*: Orquestan el flujo de datos usando RxJava.
+    -   *Views*: Activities y Fragments que implementan contratos de vista.
 
-## Endpoints Utilizados (TheMovieDB)
-- `GET /movie/popular`: Obtiene películas populares.
-- `GET /movie/top_rated`: Obtiene películas mejor valoradas.
-- `GET /movie/upcoming`: Obtiene próximos estrenos.
-- `GET /movie/{movie_id}/credits`: Obtiene el reparto principal (Actores).
-- **Imágenes**: `https://image.tmdb.org/t/p/w500`
+---
 
-## Principios SOLID Documentados
-- **S (SRP)**: Mappers (`MovieMapper.kt`) solo transforman datos; UseCases solo ejecutan una acción.
-- **O (Open/Closed)**: Repositorios escalables mediante interfaces.
-- **L (Liskov)**: Las implementaciones de repositorios en `Data` son intercambiables mediante Hilt.
-- **I (Interface Segregation)**: Contratos MVP específicos por pantalla (`MainContract`, `DetailContract`).
-- **D (Dependency Inversion)**: Hilt inyecta abstracciones en los Presenters y Activities.
+## 🛠️ Tech Stack y Dependencias
+-   **Lenguaje**: Kotlin `2.0.21` (Moderno y Conciso).
+-   **Inyección de Dependencias**: Hilt `2.55` (Inversión de Control).
+-   **Networking**: Retrofit `2.11.0` + Gson (Consumo de servicios REST).
+-   **Programación Reactiva**: RxJava 2 + RxKotlin (Manejo de flujos de datos asíncronos).
+-   **Imagen**: Glide `4.16.0` (Carga optimizada de imágenes y perfiles).
+-   **Firebase**:
+    -   Remote Config: Manejo de Splash, Temas dinámicos y Feature Toggles.
+-   **UI Components**:
+    -   ConstraintLayout (Diseños planos y eficientes).
+    -   Nested RecyclerViews (Listado de categorías con scroll interno).
+    -   ViewPager2 (Carrusel de imágenes en detalle).
+    -   BottomSheetDialogFragment (Interacción enriquecida de usuario).
 
-## Cómo ejecutar el proyecto
-1. Clonar el repositorio.
-2. Abrir en Android Studio.
-3. Asegurar que las claves están en `gradle.properties` (incluidas por defecto para este reto).
-4. Realizar un **Gradle Sync**.
-5. Seleccionar el Build Variant `devDebug` o `prodRelease`.
-6. Ejecutar en un dispositivo real o emulador.
+---
 
-## Capturas de Pantalla
+## 🚀 Cómo ejecutar el proyecto
 
-|           Splash Screen           |       Home (Categorías)       |        Detalle de Película        | Recomendación |
-|:---------------------------------:|:-----------------------------:|:---------------------------------:|:---:|
+### 1. Clonar el repositorio
+Abre una terminal y ejecuta el siguiente comando:
+```bash
+git clone https://github.com/rotarolasanchez/imdumb-app.git
+```
+
+### 2. Abrir en Android Studio
+- Abre Android Studio (versión **Ladybug 2024.2.1** o superior recomendada).
+- Selecciona **File > Open** y busca la carpeta del proyecto clonado.
+
+### 3. Configuración y Sync
+- El proyecto ya incluye las claves necesarias (`TMDB_API_KEY`, etc.) dentro del archivo `gradle.properties` para garantizar una **compilación inmediata**.
+- Espera a que Android Studio finalice el **Gradle Sync**. Si no inicia automáticamente, presiona el icono de elefante en la barra de herramientas.
+
+### 4. Selección de Variante y Ejecución
+- Abre la pestaña **Build Variants** (ubicada en el lateral izquierdo inferior).
+- Selecciona la variante que prefieras:
+  - `devDebug`: Entorno de desarrollo (Recomendado para pruebas).
+  - `prodRelease`: Versión final de producción.
+- Conecta un dispositivo real o inicia un emulador (API 24+).
+- Haz clic en **Run 'app'** (icono de play verde).
+
+---
+
+## 🌐 Configuración de Firebase
+La aplicación se comunica con Firebase para cargar configuraciones en tiempo real:
+-   **Feature Toggle**: `enable_recommendation` habilita/deshabilita el botón en el detalle.
+-   **Dynamic Theme**: `app_theme` permite cambiar entre `light` y `dark` desde la consola.
+-   **Personalización**: `welcome_text` y `home_title` permiten cambiar textos de la app sin actualizar el código.
+
+---
+
+## ✨ Principios SOLID Aplicados
+-   **SRP**: Cada Mapper y Caso de Uso tiene una responsabilidad única y atómica.
+-   **OCP**: La lógica de negocio está abierta a extensión mediante nuevos casos de uso pero cerrada a modificación.
+-   **LSP**: Los repositorios se inyectan mediante interfaces, permitiendo sustituir la fuente de datos (Mock vs Real) sin afectar al sistema.
+-   **ISP**: Los contratos MVP (`Contract.kt`) definen interfaces específicas para cada vista, evitando métodos innecesarios.
+-   **DIP**: Se depende de abstracciones; Hilt maneja la creación y ciclo de vida de los objetos.
+
+---
+
+## 📸 Capturas de Pantalla
+
+| Splash Screen | Home (Categorías) | Detalle de Película | Recomendación |
+|:---:|:---:|:---:|:---:|
 | <img src="screenshots/Splash.png" width="200" /> | <img src="screenshots/Home.png" width="200" /> | <img src="screenshots/Detail.png" width="200" /> | <img src="screenshots/BottomSheet.png" width="200" /> |
 
+---
+
+## 👨‍💻 Autor
+**Ronald Eduardo Otarola Sanchez**
+- GitHub: [@rotarolasanchez](https://github.com/rotarolasanchez)
