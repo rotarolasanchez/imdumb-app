@@ -3,6 +3,7 @@ package com.example.imdumb.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.example.imdumb.databinding.ItemMovieBinding
 import com.example.imdumb.domain.model.MovieModel
@@ -22,10 +23,17 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movieModels[position]
         holder.binding.tvTitle.text = movie.title
+
+        val circularProgressDrawable = CircularProgressDrawable(holder.itemView.context).apply {
+            strokeWidth = 5f
+            centerRadius = 30f
+            start()
+        }
+
         Glide.with(holder.itemView.context)
             .load(movie.posterPath)
             .centerCrop()
-            .placeholder(android.R.drawable.progress_indeterminate_horizontal)
+            .placeholder(circularProgressDrawable)
             .error(android.R.drawable.stat_notify_error)
             .into(holder.binding.ivPoster)
 

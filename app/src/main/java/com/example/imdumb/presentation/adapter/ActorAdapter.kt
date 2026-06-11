@@ -3,6 +3,7 @@ package com.example.imdumb.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.example.imdumb.databinding.ItemActorBinding
 import com.example.imdumb.domain.model.ActorModel
@@ -21,10 +22,17 @@ class ActorAdapter(private val actors: List<ActorModel>) : RecyclerView.Adapter<
         holder.binding.tvActorName.text = actor.name
         holder.binding.tvCharacterName.text = actor.character
         
+        val circularProgressDrawable = CircularProgressDrawable(holder.itemView.context).apply {
+            strokeWidth = 5f
+            centerRadius = 30f
+            start()
+        }
+
         Glide.with(holder.itemView.context)
             .load(actor.profilePath)
             .circleCrop()
-            .placeholder(android.R.drawable.ic_menu_report_image)
+            .placeholder(circularProgressDrawable)
+            .error(android.R.drawable.ic_menu_report_image)
             .into(holder.binding.ivActorProfile)
     }
 

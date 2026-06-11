@@ -18,6 +18,7 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
+    private var isNavigating = false
 
     @Inject
     lateinit var remoteConfig: FirebaseRemoteConfig
@@ -31,38 +32,58 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvVersion.text = "v${BuildConfig.VERSION_NAME}"
-
-        // Mostrar el texto guardado localmente de inmediato mientras se descarga el nuevo
         binding.tvWelcome.text = localConfig.getConfig("welcome_text") ?: "Cargando..."
-        
+
+        // Timeout de seguridad: Si en 6 segundos Firebase no responde, avanzamos con lo que tengamos
+        binding.root.postDelayed({
+            navigateToMain()
+        }, 6000)
+
         fetchRemoteConfig()
     }
 
     private fun fetchRemoteConfig() {
-        // Obligar a que la descarga ocurra ahora
         remoteConfig.fetchAndActivate()
-            .addOnCompleteListener(this) { task ->
-                val welcomeText = remoteConfig.getString("welcome_text")
-                val homeTitle = remoteConfig.getString("home_title")
-                val enableRecommendation = remoteConfig.getBoolean("enable_recommendation")
-                val appTheme = remoteConfig.getString("app_theme")
-
-                // Guardar en persistencia local para cumplir el requerimiento de "guarde y cargue"
-                localConfig.saveConfig("welcome_text", welcomeText)
-                localConfig.saveConfig("home_title", homeTitle)
-                localConfig.saveBoolean("enable_recommendation", enableRecommendation)
-                localConfig.saveConfig("app_theme", appTheme)
-
-                // Aplicar cambios en UI de inmediato
-                applyTheme(appTheme)
-                binding.tvWelcome.text = welcomeText
+            .addOnCompleteListener(this) { 
+                // Al completar (sea éxito o error), actualizamos datos y navegamos
+                updateLocalConfigAndUI()
                 
-                // Pequeño delay para que el usuario vea el mensaje de bienvenida actualizado
+                // Delay corto para que el usuario vea el texto si se descargó rápido
                 binding.root.postDelayed({
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }, 3000)
+                    navigateToMain()
+                }, 2000)
             }
+    }
+
+    private fun updateLocalConfigAndUI() {
+        try {
+            val welcomeText = remoteConfig.getString("welcome_text")
+            val homeTitle = remoteConfig.getString("home_title")
+            val enableRecommendation = remoteConfig.getBoolean("enable_recommendation")
+            val appTheme = remoteConfig.getString("app_theme")
+
+            // Guardar localmente
+            localConfig.saveConfig("welcome_text", welcomeText)
+            localConfig.saveConfig("home_title", homeTitle)
+            localConfig.saveBoolean("enable_recommendation", enableRecommendation)
+            localConfig.saveConfig("app_theme", appTheme)
+
+            // Actualizar UI de inmediato
+            if (welcomeText.isNotEmpty()) {
+                binding.tvWelcome.text = welcomeText
+            }
+            applyTheme(appTheme)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun navigateToMain() {
+        if (isNavigating) return
+        isNavigating = true
+        
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     private fun applyTheme(theme: String) {
