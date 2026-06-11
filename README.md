@@ -69,3 +69,11 @@ El proyecto requiere el archivo `google-services.json` en la carpeta `app/`. Se 
 4. Realizar un **Gradle Sync**.
 5. Seleccionar el Build Variant `devDebug` o `prodRelease`.
 6. Ejecutar en un dispositivo real o emulador.
+
+## Capturas de Pantalla
+
+| Splash Screen | Home (Categorías) | Detalle de Película | Recomendación |
+|:---:|:---:|:---:|:---:|
+| ![Splash](https://via.placeholder.com/200x400?text=Splash+Screen) | ![Home](https://via.placeholder.com/200x400?text=Home+Screen) | ![Detail](https://via.placeholder.com/200x400?text=Detail+Screen) | ![BottomSheet](https://via.placeholder.com/200x400?text=Bottom+Sheet) |
+
+> **Nota**: Para una mejor visualización del flujo, se recomienda incluir un GIF demostrativo en esta sección.

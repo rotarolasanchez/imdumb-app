@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.imdumb.BuildConfig
 import com.example.imdumb.data.local.LocalConfig
 import com.example.imdumb.databinding.ActivitySplashBinding
 import com.example.imdumb.presentation.main.MainActivity
@@ -28,6 +29,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.tvVersion.text = "v${BuildConfig.VERSION_NAME}"
 
         // Mostrar el texto guardado localmente de inmediato mientras se descarga el nuevo
         binding.tvWelcome.text = localConfig.getConfig("welcome_text") ?: "Cargando..."
@@ -58,7 +61,7 @@ class SplashActivity : AppCompatActivity() {
                 binding.root.postDelayed({
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
-                }, 2000)
+                }, 3000)
             }
     }
 
