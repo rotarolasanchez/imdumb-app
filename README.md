@@ -72,8 +72,7 @@ El proyecto requiere el archivo `google-services.json` en la carpeta `app/`. Se 
 
 ## Capturas de Pantalla
 
-| Splash Screen | Home (Categorías) | Detalle de Película | Recomendación |
-|:---:|:---:|:---:|:---:|
-| ![Splash](https://via.placeholder.com/200x400?text=Splash+Screen) | ![Home](https://via.placeholder.com/200x400?text=Home+Screen) | ![Detail](https://via.placeholder.com/200x400?text=Detail+Screen) | ![BottomSheet](https://via.placeholder.com/200x400?text=Bottom+Sheet) |
+|           Splash Screen           |       Home (Categorías)       |        Detalle de Película        | Recomendación |
+|:---------------------------------:|:-----------------------------:|:---------------------------------:|:---:|
+| ![Splash](screenshots/Splash.png) | ![Home](screenshots/Home.png) | ![Detail](screenshots/Detail.png) | ![BottomSheet](screenshots/BottomSheet.png) |
 
-> **Nota**: Para una mejor visualización del flujo, se recomienda incluir un GIF demostrativo en esta sección.
